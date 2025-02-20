@@ -9,7 +9,7 @@ url = base_url + endpoint_url
 
 # Define the headers with cookies
 headers = {
-    'Cookie': 'csrftoken=jr6DahhKuGKgXX6Dxb3F4iR9FgiiQkAL; sessionid=bvlvh8bqcwhbzr2eqqk3blv9x5b68q4r'
+    'Cookie': 'csrftoken=jr6DahhKuGKgXX6Dxb3F4iR9FgL; sessionid=bvlvh8bqcwhbzr2eqqk3b'
 }
 
 try:
