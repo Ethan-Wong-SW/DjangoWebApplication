@@ -798,6 +798,19 @@ def generate_summary_report(unique_bugs, unique_crashes):
     
     logger.info(f"Text summary report generated: {text_report_path}")
 
+def print_summary():
+    print("\n=== FUZZING SUMMARY ===")
+    print(f"Total tests executed: {executed}")
+    print(f"Runtime: {(time.time() - start_time) / 60:.2f} minutes")
+    print(f"Unique bugs found: {len(unique_bugs)}")
+    print(f"Unique crashes found: {len(unique_crashes)}")
+    print(f"Unique code paths explored: {len(coverage_hashes)}")
+    print(f"Final Corpus Summary → Seed Corpus: {len(seed_corpus)} | Test Corpus: {len(test_corpus)} | Total Corpus: {len(seed_corpus) + len(test_corpus)}")
+    print(f"Bug reports location: ./bugs/")
+    print(f"Crash reports location: ./crashes/")
+    print(f"Summary reports: ./logs/")
+    print(f"Coverage report: ./coverage_html_report/index.html")
+    print("=====================")
 
 # === Main Fuzz Loop with Energy-Based Selection ===
 seen_hashes = set()
@@ -975,36 +988,14 @@ try:
                 f"{len(unique_bugs)} unique bugs | {len(unique_crashes)} unique crashes"
             )
 
-    print("\n=== FUZZING SUMMARY ===")
-    print(f"Total tests executed: {executed}")
-    print(f"Runtime: {(time.time() - start_time) / 60:.2f} minutes")
-    print(f"Unique bugs found: {len(unique_bugs)}")
-    print(f"Unique crashes found: {len(unique_crashes)}")
-    print(f"Unique code paths explored: {len(coverage_hashes)}")
-    print(f"Final Corpus Summary → Seed Corpus: {len(seed_corpus)} | Test Corpus: {len(test_corpus)} | Total Corpus: {len(seed_corpus) + len(test_corpus)}")
-    print(f"Bug reports location: ./bugs/")
-    print(f"Crash reports location: ./crashes/")
-    print(f"Summary reports: ./logs/")
-    print(f"Coverage report: ./coverage_html_report/index.html")
-    print("=====================")
+    print_summary()
+
 except KeyboardInterrupt:
     logger.info("Fuzzing manually interrupted. Generating final report...")
-
-        # Generate summary reports
+    # Generate summary reports
     generate_summary_report(unique_bugs, unique_crashes)
     # Print final statistics
-    print("\n=== FUZZING SUMMARY ===")
-    print(f"Total tests executed: {executed}")
-    print(f"Runtime: {(time.time() - start_time) / 60:.2f} minutes")
-    print(f"Unique bugs found: {len(unique_bugs)}")
-    print(f"Unique crashes found: {len(unique_crashes)}")
-    print(f"Unique code paths explored: {len(coverage_hashes)}")
-    print(f"Final Corpus Summary → Seed Corpus: {len(seed_corpus)} | Total Corpus: {len(seed_corpus) + len(test_corpus)}")
-    print(f"Bug reports location: ./bugs/")
-    print(f"Crash reports location: ./crashes/")
-    print(f"Summary reports: ./logs/")
-    print(f"Coverage report: ./coverage_html_report/index.html")
-    print("=====================")
+    print_summary()
 
 # End of fuzzing loop
 logger.info("Fuzzing complete.")
