@@ -54,7 +54,6 @@ def parse_args():
 args = parse_args()
 
 def relaxed_equal(a, b):
-    # Treat numerics and string numerics as equal (e.g., 10.09 vs "10.09")
     if isinstance(a, (int, float)) and isinstance(b, str):
         try:
             return str(a) == b or float(b) == a
@@ -81,11 +80,15 @@ archive_and_clear("bugs")
 archive_and_clear("crashes")
 
 # === Constants ===
+# INTERESTING_VALUES = [
+#     "", " ", None, 0, -1, 1e100, "<script>alert(1)</script>", "' OR 1=1 --",
+#     "../../etc/passwd", "\ufffd" * 1000, True, False, "null", "undefined",
+#     "NaN", "Infinity", "A" * 2048, 12345678901234567890, "🤯", {}, [],
+#     datetime.now().isoformat(), 10.09, 10.999
+# ]
+
 INTERESTING_VALUES = [
-    "", " ", None, 0, -1, 1e100, "<script>alert(1)</script>", "' OR 1=1 --",
-    "../../etc/passwd", "\ufffd" * 1000, True, False, "null", "undefined",
-    "NaN", "Infinity", "A" * 2048, 12345678901234567890, "🤯", {}, [],
-    datetime.now().isoformat(), 10.09, 10.999
+    10.09, 10.999
 ]
 
 class AdaptiveMutator:
@@ -754,7 +757,7 @@ def check_stop_conditions():
     return False
 
 # === Summary Report Generation ===
-def generate_summary_report(unique_bugs, unique_crashes):
+def generate_summary_report(executed, start_time, unique_bugs, unique_crashes):
     """Generate a summary report of all issues found"""
     timestamp = datetime.now().strftime("%Y%m%d-%H%M%S")
     summary_path = f"logs/summary_{timestamp}.json"
@@ -1041,7 +1044,7 @@ def main():
     except KeyboardInterrupt:
         logger.info("Fuzzing manually interrupted. Generating final report...")
         # Generate summary reports
-        generate_summary_report(unique_bugs, unique_crashes)
+        generate_summary_report(executed, start_time, unique_bugs, unique_crashes)
         # Print final statistics
         print_summary(executed, start_time, unique_bugs, unique_crashes, seed_corpus, test_corpus)
 
