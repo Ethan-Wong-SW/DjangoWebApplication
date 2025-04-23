@@ -80,15 +80,12 @@ archive_and_clear("bugs")
 archive_and_clear("crashes")
 
 # === Constants ===
-# INTERESTING_VALUES = [
-#     "", " ", None, 0, -1, 1e100, "<script>alert(1)</script>", "' OR 1=1 --",
-#     "../../etc/passwd", "\ufffd" * 1000, True, False, "null", "undefined",
-#     "NaN", "Infinity", "A" * 2048, 12345678901234567890, "🤯", {}, [],
-#     datetime.now().isoformat(), 10.09, 10.999
-# ]
-
 INTERESTING_VALUES = [
-    10.09, 10.999
+    "", " ", None, 0, -1, 1e100, "<script>alert(1)</script>", "' OR 1=1 --",
+    "../../etc/passwd", "\ufffd" * 1000, True, False, "null", "undefined",
+    "NaN", "Infinity", "A" * 2048, 12345678901234567890, "🧠", {}, [],
+    datetime.now().isoformat(),
+    0.0001, 0.001, 0.01, 0.1, 1.0001, 1.2345, 3.14159, 1234.56789, 9999.9999, 1e-10, 1e10
 ]
 
 class AdaptiveMutator:
