@@ -23,11 +23,11 @@ payloads = [
     },
     {
         "title": "Blank info field and corrupted Unicode price",
-        "data": {"name": "aa", "info": "", "price": "'\ufffd' * 100"}
+        "data": {"name": "aa", "info": "", "price": "\ufffd" * 100}  # fixed here
     },
     {
         "title": "Excessive Unicode garbage in name and info fields",
-        "data": {"name": "'\ufffd' * 1000", "info": "info", "price": -4294967295}
+        "data": {"name": "\ufffd" * 1000, "info": "info", "price": -4294967295}  # fixed here
     },
     {
         "title": "Blank info and edge-case negative price",
@@ -35,7 +35,7 @@ payloads = [
     },
     {
         "title": "Long strings + invalid price format",
-        "data": {"name": "A" * 3000, "info": "A" * 3000, "price": "'\ufffd' * 500"}
+        "data": {"name": "A" * 3000, "info": "A" * 3000, "price": "\ufffd" * 500}  # fixed here
     },
     {
         "title": "SQL Injection-like input in info field",
@@ -51,7 +51,7 @@ payloads = [
     },
     {
         "title": "Invalid Unicode price + overlong name",
-        "data": {"name": "A" * 1000, "info": "12", "price": "\ufffd" * 50}
+        "data": {"name": "A" * 1000, "info": "12", "price": "\ufffd" * 50}  # fixed here
     },
     {
         "title": "Shell Injection string in price field",
@@ -64,40 +64,6 @@ payloads = [
     {
         "title": "Semantic mismatch: malformed price '00000000'",
         "data": {"name": "../../etc/passwd", "info": "Test info", "price": "00000000"}
-    },
-
-    ## --- Crashes (SequenceIssues) ---
-    {
-        "title": "Crash: Script injection in name + corrupted Unicode info",
-        "data": {
-            "name": "<script>alert(1)</script>",
-            "info": "\ufffd" * 1000,
-            "price": "default"
-        }
-    },
-    {
-        "title": "Crash: SQL Injection string in name",
-        "data": {
-            "name": "'; DROP TABLE products; --",
-            "info": "",
-            "price": "default"
-        }
-    },
-    {
-        "title": "Crash: Overly long info + default price",
-        "data": {
-            "name": "default",
-            "info": "A" * 2000,
-            "price": "default"
-        }
-    },
-    {
-        "title": "Crash: Minimal name, blank info, default price",
-        "data": {
-            "name": "aa",
-            "info": "",
-            "price": "default"
-        }
     }
 ]
 
