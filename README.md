@@ -1,5 +1,23 @@
 # 50.053 Software Testing and Verification 
 
+## Run the fuzzer:
+
+## Run Indefinitely
+
+To run the fuzzer continuously until manually stopped (e.g., with Ctrl+C):
+
+```
+python djangofuzzer.py --run-indefinitely
+```
+
+## Custom Number of Test Cases
+
+To specify a custom number of test cases to run:
+```
+python djangofuzzer.py --max-tests 1000
+```
+This example will run 1000 test cases unless stopped earlier.
+
 ## Fuzzing a Django Web Application.
 
 ## Manual Build
